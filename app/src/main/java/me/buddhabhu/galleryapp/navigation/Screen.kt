@@ -10,9 +10,9 @@ sealed class Screen(val route: String) {
                return "image_list_screen/$folderId"
           }
      }
-     object ImageScreen: Screen(route = "image_screen/{$ARGUMENT_IMG_PATH}") {
+     object ImageScreen: Screen(route = "image_screen?path={$ARGUMENT_IMG_PATH}") {
           fun passImagePath(imgPath: String): String {
-               return "image_screen/$imgPath"
+               return "image_screen?path=$imgPath"
           }
      }
 }

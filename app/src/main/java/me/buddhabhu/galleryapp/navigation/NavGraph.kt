@@ -50,6 +50,7 @@ fun SetUpNavGraph(
             arguments = listOf(
                 navArgument(ARGUMENT_IMG_PATH) {
                     type = NavType.StringType
+                    defaultValue = ""
                 }
             )
         ) {

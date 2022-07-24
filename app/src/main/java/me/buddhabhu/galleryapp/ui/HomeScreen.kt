@@ -1,12 +1,8 @@
 package me.buddhabhu.galleryapp.ui
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -14,16 +10,16 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.semantics.Role.Companion.Image
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
-import coil.compose.rememberAsyncImagePainter
 import me.buddhabhu.galleryapp.model.Picture
 import me.buddhabhu.galleryapp.navigation.Screen
 import me.buddhabhu.galleryapp.viewmodel.GalleryViewModel
@@ -36,22 +32,28 @@ fun HomeScreenUI(
 ) {
 
     val albums = viewModel.picturesMap.keys.toList()
+    
+    Column {
 
-    LazyVerticalGrid(
-        cells = GridCells.Fixed(3),
-        state = rememberLazyListState(),
-        contentPadding = PaddingValues(8.dp),
-        verticalArrangement = Arrangement.SpaceEvenly,
-        horizontalArrangement = Arrangement.SpaceAround,
-    ) {
+        TopAppBar(
+            title = { Text(text = "GalleryApp") },
+            backgroundColor = Color.Magenta
+        )
+        LazyVerticalGrid(
+            cells = GridCells.Fixed(3),
+            state = rememberLazyListState(),
+            contentPadding = PaddingValues(8.dp),
+            verticalArrangement = Arrangement.SpaceEvenly,
+            horizontalArrangement = Arrangement.SpaceAround,
+        ) {
 
-        itemsIndexed(items = albums) { _, it ->
-            FolderUI(
-                navController = navController,
-                picture = viewModel.picturesMap[it]?.first()
-            )
+            itemsIndexed(items = albums) { _, it ->
+                FolderUI(
+                    navController = navController,
+                    picture = viewModel.picturesMap[it]?.first()
+                )
+            }
         }
-
     }
 }
 
@@ -63,7 +65,9 @@ fun FolderUI(
     if(picture != null) {
         Card(
             modifier = Modifier
-                .size(120.dp)
+                .padding(4.dp)
+                .width(100.dp)
+                .height(120.dp)
                 .clickable {
                     navController.navigate(Screen.ImageList.passFolderName(picture.bucketId.toString()))
                 },
@@ -82,7 +86,8 @@ fun FolderUI(
 
                 Text(
                     text = picture.bucketName ?: "Photo",
-                    overflow = TextOverflow.Ellipsis
+                    overflow = TextOverflow.Ellipsis,
+                    textAlign = TextAlign.Center,
                 )
             }
         }

@@ -3,9 +3,7 @@ package me.buddhabhu.galleryapp.utils
 import android.content.Context
 import android.os.Build
 import android.provider.MediaStore
-import android.util.Log
 import androidx.annotation.RequiresApi
-import androidx.lifecycle.ViewModelProvider
 import me.buddhabhu.galleryapp.model.Picture
 import me.buddhabhu.galleryapp.viewmodel.GalleryViewModel
 
@@ -37,10 +35,6 @@ fun getImages(
         )
 
         listPictures.add(picture)
-    }
-
-    for(picture in listPictures) {
-        println("DATA RECEIVED : $picture")
     }
 
     viewModel.picturesMap = listPictures.groupBy { it.bucketId!! }.toMutableMap()
